@@ -111,4 +111,7 @@ struct SignUpScreen: View {
         }
     }
 }
+#Preview {
+    SignUpScreen()
+}
 

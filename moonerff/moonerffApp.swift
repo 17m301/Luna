@@ -4,11 +4,18 @@ import SwiftUI
 @main
 struct MoonerFullApp: App {
     @StateObject var appState = AppState()
+    @State private var isShowingLoading = true
     
     var body: some Scene {
         WindowGroup {
             Group {
-                if !appState.isSignedUp {
+                if isShowingLoading {
+                    LoadingPage {
+                        withAnimation {
+                            isShowingLoading = false
+                        }
+                    }
+                } else if !appState.isSignedUp {
                     SignUpScreen()
                         .environmentObject(appState)
                 } else if !appState.isLoggedIn {

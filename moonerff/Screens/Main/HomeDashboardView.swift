@@ -5,7 +5,7 @@ struct HomeDashboardView: View {
     @EnvironmentObject var appState: AppState
     @Binding var showPaywall: Bool
     @Binding var showLogoutConfirmation: Bool
-    
+    @State private var tip: Tip?
     var body: some View {
         ZStack {
             AppTheme.gradient.ignoresSafeArea()
@@ -70,15 +70,17 @@ struct HomeDashboardView: View {
                             else { print("Ritual Started") }
                         }) {
                             VStack(spacing: 15) {
-                                ZStack {
-                                    Circle().fill(AppTheme.accent.opacity(0.3)).frame(width: 120, height: 120)
-                                    Image(systemName: appState.spiritAnimal)
-                                        .font(.system(size: 50))
-                                        .foregroundStyle(.white)
-                                }
                                 HStack {
-                                    Image(systemName: appState.isSubscribed ? "play.fill" : "lock.fill")
-                                    Text(appState.isSubscribed ? "Start Sleep Ritual" : "Unlock Ritual")
+                                    Image(systemName: "lightbulb.fill")
+                                        .font(.title2)
+                                        .foregroundStyle(AppTheme.accent)
+                                        .padding(.horizontal)
+                                    
+                                    Text(tip?.tips ?? "")
+                                        .font(.headline)
+                                        .foregroundStyle(.white)
+                                        .multilineTextAlignment(.center)
+                                    Spacer()
                                 }
                                 .font(.headline).foregroundStyle(.white)
                             }
@@ -86,6 +88,9 @@ struct HomeDashboardView: View {
                             .padding(.vertical, 30)
                             .background(AppTheme.card)
                             .cornerRadius(30)
+                            .onAppear() {
+                                tip = tips.randomElement()
+                            }
                         }
                         
                         // Goal Display
@@ -113,4 +118,19 @@ struct HomeDashboardView: View {
         }
     }
 }
+
+#Preview {
+    let mockAppState = AppState()
+    mockAppState.userName = "Ajith"
+    mockAppState.isSubscribed = false
+    mockAppState.spiritAnimal = "moon.stars.fill"
+    mockAppState.targetHours = 8.0
+    
+    return HomeDashboardView(
+        showPaywall: .constant(false),
+        showLogoutConfirmation: .constant(false)
+    )
+    .environmentObject(mockAppState)
+}
+
 

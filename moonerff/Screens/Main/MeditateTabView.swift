@@ -3,13 +3,13 @@ import SwiftUI
 // MARK: - Meditate / Pre-Ritual Tab View
 struct MeditateTabView: View {
     enum Practice: String, Identifiable {
-        case breathing, bodyScan, gratitude, stretching
+        case breathing, meditate, gratitude, stretching
         var id: String { rawValue }
     }
     
     let practices: [(title: String, icon: String, subtitle: String, practice: Practice)] = [
         ("Guided Breathing", "lungs.fill", "3–5 min reset", .breathing),
-        ("Meditate", "figure.mind.and.body", "Full body relaxation", .bodyScan),
+        ("Meditate", "figure.mind.and.body", "Full body relaxation", .meditate),
         ("Gratitude Notes", "heart.text.square.fill", "End the day on a high", .gratitude),
         ("Mindful Stretching", "figure.cooldown", "Release tension", .stretching)
     ]
@@ -62,8 +62,8 @@ struct MeditateTabView: View {
             switch practice {
             case .breathing:
                 BreathingSessionView()
-            case .bodyScan:
-                BodyScanSessionView()
+            case .meditate:
+                MeditationView()
             case .gratitude:
                 GratitudeNotesView()
             case .stretching:
@@ -72,4 +72,5 @@ struct MeditateTabView: View {
         }
     }
 }
+
 

@@ -85,3 +85,7 @@ struct BreathingSessionView: View {
     }
 }
 
+#Preview {
+    BreathingSessionView()
+}
+
